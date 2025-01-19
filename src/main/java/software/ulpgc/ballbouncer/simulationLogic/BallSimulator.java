@@ -11,36 +11,36 @@ public class BallSimulator {
 
     public Ball simulate(Ball ball){
         return new Ball(
-                ball.id(), ball.x(),
-                ball.r(), newHeightOf(ball),
-                newVelocityOf(ball), ball.g(),
+                ball.id(), ball.xAxisPosition(),
+                ball.radius(), newHeightOf(ball),
+                newVelocityOf(ball), ball.gravity(),
                 ball.cr()
         );
     }
 
     private double newHeightOf(Ball ball) {
         return willBounce(ball) ?
-                newHeightAfterBouncedOf(ball) : ball.h() + ball.v() * dt;
+                newHeightAfterBouncedOf(ball) : ball.initialHeight() + ball.velocity() * dt;
     }
 
     private double newVelocityOf(Ball ball) {
         return willBounce(ball) ?
-                newVelocityAfterBouncedOf(ball) : ball.v() + ball.g() * dt;
+                newVelocityAfterBouncedOf(ball) : ball.velocity() + ball.gravity() * dt;
     }
 
     private boolean willBounce(Ball ball) {
-        return ball.v() < 0 && dt > timeToBounceOf(ball);
+        return ball.velocity() < 0 && dt > timeToBounceOf(ball);
     }
 
     private double newHeightAfterBouncedOf(Ball ball) {
-        return ball.r() + newVelocityAfterBouncedOf(ball) * (dt - timeToBounceOf(ball));
+        return ball.radius() + newVelocityAfterBouncedOf(ball) * (dt - timeToBounceOf(ball));
     }
 
     private double newVelocityAfterBouncedOf(Ball ball) {
-        return - ball.cr() * (ball.v() + ball.g() * timeToBounceOf(ball));
+        return - ball.cr() * (ball.velocity() + ball.gravity() * timeToBounceOf(ball));
     }
 
     private static double timeToBounceOf(Ball ball) {
-        return - (ball.h() - ball.r()) / ball.v();
+        return - (ball.initialHeight() - ball.radius()) / ball.velocity();
     }
 }

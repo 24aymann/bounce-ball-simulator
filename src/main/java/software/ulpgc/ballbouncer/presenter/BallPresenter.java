@@ -41,10 +41,10 @@ public class BallPresenter {
         return new Ball(
                 ball.id(),
                 toMeters(circle.xComponent()),
-                ball.r(),
+                ball.radius(),
                 toMeters(circle.yComponent()),
                 0,
-                ball.g(),
+                ball.gravity(),
                 ball.cr());
     }
 
@@ -84,8 +84,8 @@ public class BallPresenter {
 
     private Circle ballsMap(Ball ball) {
         return new Circle(
-                ball.id(), toPixels(ball.x()),
-                toPixels(ball.h()), toPixels(ball.r())
+                ball.id(), toPixels(ball.xAxisPosition()),
+                toPixels(ball.initialHeight()), toPixels(ball.radius())
         );
     }
 
